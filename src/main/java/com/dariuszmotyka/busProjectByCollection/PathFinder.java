@@ -2,6 +2,7 @@ package com.dariuszmotyka.busProjectByCollection;
 
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class PathFinder implements PathFinderInterface {
 
@@ -9,8 +10,12 @@ public class PathFinder implements PathFinderInterface {
     private Map<Integer, List<BusAndBusStop>> solutionsMap;
     private Map<Integer, List<BusAndBusStop>> expectedSolutionsMap;
     private Map<String, BusStopInterface> allBusStops;
+    
+    
 	
 	public void addLine(BusLineInterface line, BusInterface bus) {
+
+		
 	    /**
 	     * Metoda dodaje linię autobusową do serwisu. Ten sam autobus
 	     * obsługuje linię w obu kierunkach.
