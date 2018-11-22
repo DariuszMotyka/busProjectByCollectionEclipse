@@ -4,17 +4,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.sound.sampled.LineListener;
+
 public class PathFinder implements PathFinderInterface {
 
-    private Map<Integer, List<BusStopInterface>> lines;
+    private Map<Integer, BusLineInterface> lines = new TreeMap<>();
+    private Map<Integer, List<BusAndBusStop>> solutionsMap;
+    
     private Map<Integer, List<BusAndBusStop>> solutionsMap;
     private Map<Integer, List<BusAndBusStop>> expectedSolutionsMap;
     private Map<String, BusStopInterface> allBusStops;
     
     
+    
 	
 	public void addLine(BusLineInterface line, BusInterface bus) {
-
+		lines.put(lines.size()-1, line);
 		
 	    /**
 	     * Metoda dodaje linię autobusową do serwisu. Ten sam autobus
