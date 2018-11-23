@@ -82,6 +82,13 @@ public class PathFinder implements PathFinderInterface {
     	}
     }
     
+    public void printBusLineConnections() {
+    	System.out.println("Połączenia:");
+    	for(Entry<BusStopInterface, BusStopInterface> isMap : busLineConnections.entrySet()) {
+			System.out.println(isMap.getKey().getName()+" -> "+isMap.getValue().getName());
+		}
+    	System.out.println();
+    }
     
     private void addDataToAllBusStops(BusLine line) {
     	if(allBusStops.isEmpty()){
@@ -181,13 +188,6 @@ public class PathFinder implements PathFinderInterface {
 		System.out.println();
     }
     
-    public void printBusLineConnections() {
-    	System.out.println("Połączenia:");
-    	for(Entry<BusStopInterface, BusStopInterface> isMap : busLineConnections.entrySet()) {
-			System.out.println(isMap.getKey().getName()+" -> "+isMap.getValue().getName());
-		}
-    	System.out.println();
-    }
 	
 	public void addLine(BusLineInterface line, BusInterface bus) {
 		// dodanie linii

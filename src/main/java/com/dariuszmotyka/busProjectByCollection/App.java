@@ -43,5 +43,6 @@ public class App
         pathFinder.printLines();
         pathFinder.printBusLineConnections();
         pathFinder.printAddDataToAllBusStops();
+        pathFinder.find(new BusStop("I"),new BusStop("M"),2);
     }
 }
