@@ -11,8 +11,10 @@ public class PathFinder implements PathFinderInterface {
     private Map<Integer, BusLineInterface> lines = new TreeMap<>();
     private Map<Integer, List<BusAndBusStop>> solutionsMap;
     
-    private Map<Integer, List<BusAndBusStop>> solutionsMap;
+ //   private Map<Integer, List<BusAndBusStop>> solutionsMap;
     private Map<Integer, List<BusAndBusStop>> expectedSolutionsMap;
+    private Map<BusStopInterface, BusStopInterface> busLineConnections;
+    // nody
     private Map<String, BusStopInterface> allBusStops;
     
     
