@@ -22,10 +22,13 @@ public class PathFinder implements PathFinderInterface {
     
     // nody
     private Map<String, BusStopInterface> allBusStops;
+    //private Map<Integer, Map<String, BusStopInterface>> resultList = new HashMap<>();
+    private Map<String, BusStopInterface> resultList;
     //private List<BusStopInterface> allBusStops;
     
     public PathFinder() {
     	allBusStops = new HashMap<>();
+    	resultList = new HashMap<>();
     	//allBusStops = new LinkedList<>();
     	busAndBusStopConnection = new HashMap<>();
     	// generowanie połączeń
@@ -196,13 +199,6 @@ public class PathFinder implements PathFinderInterface {
 		addDataToBusAndBusTopConnection((BusLine)line,bus);
 		addDataToAllBusStops((BusLine)line); // do poprawy
 		
-	
-	
-		/*
-		for(Entry<String, BusStopInterface> isMap : allBusStops.entrySet()) {
-			System.out.println(allBusStops.get(isMap).getName());
-		}		
-		*/
 	    /**
 	     * Metoda dodaje linię autobusową do serwisu. Ten sam autobus
 	     * obsługuje linię w obu kierunkach.
@@ -212,6 +208,9 @@ public class PathFinder implements PathFinderInterface {
 	}
 
 	public void find(BusStopInterface from, BusStopInterface to, int transfers) {
+		 //private Map<Integer, Map<String, BusStopInterface>> resultList = new HashMap<>();
+		resultList = allBusStops;
+		
 		/**
 	     * Metoda zleca znalezienie połączenia autobusowego
 	     * prowadzącego od przystanku from do przystanku to
@@ -224,6 +223,36 @@ public class PathFinder implements PathFinderInterface {
 	     */
 
 	}
+	/*
+	public void displayDfs() {
+        List<Node> list = new LinkedList();
+        list.add(this.root);
+        this.displayNodeDfs(list);
+    }
+	*/
+	//public void findConnection(Map<String, BusStopInterface> map, BusStopInterface from, BusStopInterface to, int transfers) {
+	public void findConnection(BusStopInterface start, BusStopInterface end,BusStopInterface last, BusStopInterface realStart) {
+		
+		/*
+        if (!list.isEmpty()) {
+            Node temp = list.remove(list.size() - 1);
+            System.out.print("" + temp + ", ");
+            if (temp.getLeft() != null) {
+                if (temp.getRight() != null) {
+                    list.add(temp.getRight());
+                }
+                list.add(temp.getLeft());
+            } else if (temp.getRight() != null) {
+                if (temp.getLeft() != null) {
+                    list.add(temp.getLeft());
+                }
+                list.add(temp.getRight());
+            }
+            this.displayNodeDfs(list);
+        }*/
+		
+	}
+	
 
 	public int getNumerOfSolutions() {
 		
