@@ -21,11 +21,12 @@ public class PathFinder implements PathFinderInterface {
     private Map<BusStopInterface, BusStopInterface> busLineConnections;
     
     // nody
-    //private Map<String, BusStopInterface> allBusStops;
-    private List<BusStopInterface> allBusStops;
+    private Map<String, BusStopInterface> allBusStops;
+    //private List<BusStopInterface> allBusStops;
     
     public PathFinder() {
-    	allBusStops = new LinkedList<>();
+    	allBusStops = new HashMap<>();
+    	//allBusStops = new LinkedList<>();
     	busAndBusStopConnection = new HashMap<>();
     	// generowanie połączeń
 		busLineConnections = new HashMap<>();
@@ -82,7 +83,37 @@ public class PathFinder implements PathFinderInterface {
     }
     
     
+    private void addDataToAllBusStops(BusLine line) {
+    	if(allBusStops.isEmpty()){
+    		for(int i=0;i<line.getNumberOfBusStops();i++) {
+    			allBusStops.put(line.getBusStop(i).getName(),line.getBusStop(i));
+    		}
+    	}else {
+    		boolean needToAdd;
+    		for(int i=0;i<line.getNumberOfBusStops();i++) {
+    			String tmpName = line.getBusStop(i).getName();
+    			needToAdd = true;
+    			for(Entry<String, BusStopInterface> isMap : allBusStops.entrySet()) {
+    				if(isMap.getKey().equals(tmpName)) {
+    					needToAdd = false;
+    					break;
+    				}
+    			}
+    			if(needToAdd) {
+    				allBusStops.put(line.getBusStop(i).getName(),line.getBusStop(i));
+    			}
+    		}
+    	}
+    }  
     
+    public void printAddDataToAllBusStops() {
+    	System.out.println("Wszystkie przytsanki:");
+    	for(Entry<String, BusStopInterface> isMap : allBusStops.entrySet()) {
+    		System.out.println(isMap.getKey());
+    	}
+    }
+    
+    /*
     private void addDataToAllBusStops(BusLine line) {
     	if(allBusStops.isEmpty()){
     		for(int i=0;i<line.getNumberOfBusStops();i++) {
@@ -111,6 +142,7 @@ public class PathFinder implements PathFinderInterface {
     		System.out.println(isMap.getName());
     	}
     }
+    */
     /*
     private void addDataToAllBusStops(BusLine line) {
     	if(allBusStops.isEmpty()) {
