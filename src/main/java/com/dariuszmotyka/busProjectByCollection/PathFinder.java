@@ -10,10 +10,10 @@ import javax.sound.sampled.LineListener;
 public class PathFinder implements PathFinderInterface {
 
     private Map<Integer, BusLineInterface> lines = new TreeMap<>();
-    private Map<Integer, BusAndBusStop> solutionsMap;
+    //private Map<Integer, List<BusAndBusStop>> solutionsMap;
     
  //   private Map<Integer, List<BusAndBusStop>> solutionsMap;
-    private Map<Integer, List<BusAndBusStop>> busAndBusStopConnection;
+    private Map<Integer, BusAndBusStop> busAndBusStopConnection;
     private Map<BusStopInterface, BusStopInterface> busLineConnections;
     
     // nody
@@ -41,12 +41,14 @@ public class PathFinder implements PathFinderInterface {
 	}
     
     private void addDataToBusAndBusTopConnection(BusLine line, BusInterface bus) {
+    	int tmp = busAndBusStopConnection.size();
     	for(int i=0;i<line.getLine().size();i++) {
-    		busAndBusStopConnection.put(bus.getBusNumber(), new BusAndBusStop(bus.getBusNumber(),line.getBusStop(i)));
+    		busAndBusStopConnection.put(tmp,new BusAndBusStop(bus.getBusNumber(),line.getBusStop(i)));
+    		tmp++;
     	}
     }
 	
-	public void addLine(BusLineInterface line, BusInterface bus) {
+	public void addLine(BusLine line, BusInterface bus) {
 		// dodanie linii
 		
 		lines.put(lines.size()-1, line);
@@ -124,5 +126,6 @@ public class PathFinder implements PathFinderInterface {
 	     * na tym przystanku wysiadł.
 	     */
 	}
+
 
 }
