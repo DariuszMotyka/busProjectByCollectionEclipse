@@ -41,5 +41,7 @@ public class App
         pathFinder.addLine(new BusLine(trasa300), new Bus(300));
         
         pathFinder.printLines();
+        pathFinder.printBusLineConnections();
+        pathFinder.printAddDataToAllBusStops();
     }
 }

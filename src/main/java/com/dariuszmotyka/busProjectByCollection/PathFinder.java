@@ -1,6 +1,7 @@
 package com.dariuszmotyka.busProjectByCollection;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,26 +21,55 @@ public class PathFinder implements PathFinderInterface {
     private Map<BusStopInterface, BusStopInterface> busLineConnections;
     
     // nody
-    private Map<String, BusStopInterface> allBusStops;
+    //private Map<String, BusStopInterface> allBusStops;
+    private List<BusStopInterface> allBusStops;
     
     public PathFinder() {
+    	allBusStops = new LinkedList<>();
     	busAndBusStopConnection = new HashMap<>();
     	// generowanie połączeń
 		busLineConnections = new HashMap<>();
 		busLineConnections.put(new BusStop("A"), new BusStop("B"));
+		busLineConnections.put(new BusStop("B"), new BusStop("A"));
+		
 		busLineConnections.put(new BusStop("B"), new BusStop("C"));
+		busLineConnections.put(new BusStop("C"), new BusStop("B"));
+		
 		busLineConnections.put(new BusStop("C"), new BusStop("D"));
+		busLineConnections.put(new BusStop("D"), new BusStop("C"));
+		
 		busLineConnections.put(new BusStop("D"), new BusStop("E"));
+		busLineConnections.put(new BusStop("E"), new BusStop("D"));
+		
 		busLineConnections.put(new BusStop("E"), new BusStop("F"));
+		busLineConnections.put(new BusStop("F"), new BusStop("E"));
+		
 		busLineConnections.put(new BusStop("F"), new BusStop("G"));
+		busLineConnections.put(new BusStop("G"), new BusStop("F"));
+		
 		busLineConnections.put(new BusStop("H"), new BusStop("I"));
+		busLineConnections.put(new BusStop("I"), new BusStop("H"));
+		
 		busLineConnections.put(new BusStop("I"), new BusStop("C"));
+		busLineConnections.put(new BusStop("C"), new BusStop("I"));
+		
 		busLineConnections.put(new BusStop("C"), new BusStop("J"));
+		busLineConnections.put(new BusStop("J"), new BusStop("C"));
+		
 		busLineConnections.put(new BusStop("J"), new BusStop("K"));
+		busLineConnections.put(new BusStop("K"), new BusStop("J"));
+		
 		busLineConnections.put(new BusStop("L"), new BusStop("E"));
+		busLineConnections.put(new BusStop("E"), new BusStop("L"));
+		
 		busLineConnections.put(new BusStop("E"), new BusStop("M"));
+		busLineConnections.put(new BusStop("M"), new BusStop("E"));
+		
 		busLineConnections.put(new BusStop("M"), new BusStop("N"));
+		busLineConnections.put(new BusStop("N"), new BusStop("M"));
+		
 		busLineConnections.put(new BusStop("N"), new BusStop("O"));
+		busLineConnections.put(new BusStop("O"), new BusStop("N"));
 		
 	}
     
@@ -51,6 +81,37 @@ public class PathFinder implements PathFinderInterface {
     	}
     }
     
+    
+    
+    private void addDataToAllBusStops(BusLine line) {
+    	if(allBusStops.isEmpty()){
+    		for(int i=0;i<line.getNumberOfBusStops();i++) {
+    			allBusStops.add(line.getBusStop(i));
+    		}
+    	}else {
+    		boolean needToAdd;
+    		for(int i=0;i<line.getNumberOfBusStops();i++) {
+    			needToAdd = true;
+    			for(int j=0;j<allBusStops.size();j++) {
+    				if(line.getBusStop(i).getName().equals(allBusStops.get(j).getName())) {
+    					needToAdd = false;
+    					break;
+    				}
+    			}
+    			if(needToAdd) {
+    				allBusStops.add(line.getBusStop(i));
+    			}
+    		}
+    	}
+    }
+    
+    public void printAddDataToAllBusStops() {
+    	System.out.println("Wszystkie przytsanki:");
+    	for(BusStopInterface isMap : allBusStops) {
+    		System.out.println(isMap.getName());
+    	}
+    }
+    /*
     private void addDataToAllBusStops(BusLine line) {
     	if(allBusStops.isEmpty()) {
     		for(int i=0;i<line.getNumberOfBusStops();i++) {
@@ -73,7 +134,7 @@ public class PathFinder implements PathFinderInterface {
     	}
 
     }
-    
+    */
     public void printLines() {
     	System.out.println("Dostępne linie:");
     	for(Entry<Integer, BusLineInterface> isMap : lines.entrySet()) {
@@ -87,13 +148,21 @@ public class PathFinder implements PathFinderInterface {
 	
 		System.out.println();
     }
+    
+    public void printBusLineConnections() {
+    	System.out.println("Połączenia:");
+    	for(Entry<BusStopInterface, BusStopInterface> isMap : busLineConnections.entrySet()) {
+			System.out.println(isMap.getKey().getName()+" -> "+isMap.getValue().getName());
+		}
+    	System.out.println();
+    }
 	
 	public void addLine(BusLineInterface line, BusInterface bus) {
 		// dodanie linii
 		
 		lines.put(bus.getBusNumber(), line);
 		addDataToBusAndBusTopConnection((BusLine)line,bus);
-		//addDataToAllBusStops((BusLine)line); // do poprawy
+		addDataToAllBusStops((BusLine)line); // do poprawy
 		
 	
 	
