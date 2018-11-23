@@ -3,16 +3,19 @@ package com.dariuszmotyka.busProjectByCollection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import javax.sound.sampled.LineListener;
 
 public class PathFinder implements PathFinderInterface {
 
-    private Map<Integer, BusLineInterface> lines = new TreeMap<>();
+    
     //private Map<Integer, List<BusAndBusStop>> solutionsMap;
     
- //   private Map<Integer, List<BusAndBusStop>> solutionsMap;
+    //   private Map<Integer, List<BusAndBusStop>> solutionsMap;
+	//private Map<Integer, BusLineInterface> lines = new TreeMap<>();
+	private Map<Integer, BusLineInterface> lines = new TreeMap<>();
     private Map<Integer, BusAndBusStop> busAndBusStopConnection;
     private Map<BusStopInterface, BusStopInterface> busLineConnections;
     
@@ -47,13 +50,58 @@ public class PathFinder implements PathFinderInterface {
     		tmp++;
     	}
     }
+    
+    private void addDataToAllBusStops(BusLine line) {
+    	if(allBusStops.isEmpty()) {
+    		for(int i=0;i<line.getNumberOfBusStops();i++) {
+    			allBusStops.put(line.getBusStop(i).getName(), line.getBusStop(i));
+    		}
+    	}else {
+        	for(int i=0;i<line.getLine().size();i++) {
+    			boolean needAdd = true;
+    			for(Entry<String, BusStopInterface> isMap : allBusStops.entrySet()) {
+    				if(line.getBusStop(i).getName().equals(isMap.getKey())) {
+    					needAdd = false;
+    					break;
+    				}
+    			}
+    			if(needAdd) {
+					allBusStops.put(line.getBusStop(i).getName(), line.getBusStop(i));
+				}
+    		
+        	}
+    	}
+
+    }
+    
+    public void printLines() {
+    	System.out.println("Dostępne linie:");
+    	for(Entry<Integer, BusLineInterface> isMap : lines.entrySet()) {
+			System.out.println("Linia:"+isMap.getKey());
+			System.out.print("Trasa:");
+			for(int i=0;i<isMap.getValue().getNumberOfBusStops();i++) {
+					System.out.print(" - "+isMap.getValue().getBusStop(i).getName());
+			}
+			System.out.println();
+		}
 	
-	public void addLine(BusLine line, BusInterface bus) {
+		System.out.println();
+    }
+	
+	public void addLine(BusLineInterface line, BusInterface bus) {
 		// dodanie linii
 		
-		lines.put(lines.size()-1, line);
-		addDataToBusAndBusTopConnection(line,bus);
+		lines.put(bus.getBusNumber(), line);
+		addDataToBusAndBusTopConnection((BusLine)line,bus);
+		//addDataToAllBusStops((BusLine)line); // do poprawy
 		
+	
+	
+		/*
+		for(Entry<String, BusStopInterface> isMap : allBusStops.entrySet()) {
+			System.out.println(allBusStops.get(isMap).getName());
+		}		
+		*/
 	    /**
 	     * Metoda dodaje linię autobusową do serwisu. Ten sam autobus
 	     * obsługuje linię w obu kierunkach.
