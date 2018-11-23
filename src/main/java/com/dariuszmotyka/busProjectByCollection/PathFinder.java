@@ -1,5 +1,6 @@
 package com.dariuszmotyka.busProjectByCollection;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -9,19 +10,47 @@ import javax.sound.sampled.LineListener;
 public class PathFinder implements PathFinderInterface {
 
     private Map<Integer, BusLineInterface> lines = new TreeMap<>();
-    private Map<Integer, List<BusAndBusStop>> solutionsMap;
+    private Map<Integer, BusAndBusStop> solutionsMap;
     
  //   private Map<Integer, List<BusAndBusStop>> solutionsMap;
-    private Map<Integer, List<BusAndBusStop>> expectedSolutionsMap;
+    private Map<Integer, List<BusAndBusStop>> busAndBusStopConnection;
     private Map<BusStopInterface, BusStopInterface> busLineConnections;
+    
     // nody
     private Map<String, BusStopInterface> allBusStops;
     
+    public PathFinder() {
+    	busAndBusStopConnection = new HashMap<>();
+    	// generowanie połączeń
+		busLineConnections = new HashMap<>();
+		busLineConnections.put(new BusStop("A"), new BusStop("B"));
+		busLineConnections.put(new BusStop("B"), new BusStop("C"));
+		busLineConnections.put(new BusStop("C"), new BusStop("D"));
+		busLineConnections.put(new BusStop("D"), new BusStop("E"));
+		busLineConnections.put(new BusStop("E"), new BusStop("F"));
+		busLineConnections.put(new BusStop("F"), new BusStop("G"));
+		busLineConnections.put(new BusStop("H"), new BusStop("I"));
+		busLineConnections.put(new BusStop("I"), new BusStop("C"));
+		busLineConnections.put(new BusStop("C"), new BusStop("J"));
+		busLineConnections.put(new BusStop("J"), new BusStop("K"));
+		busLineConnections.put(new BusStop("L"), new BusStop("E"));
+		busLineConnections.put(new BusStop("E"), new BusStop("M"));
+		busLineConnections.put(new BusStop("M"), new BusStop("N"));
+		busLineConnections.put(new BusStop("N"), new BusStop("O"));
+		
+	}
     
-    
+    private void addDataToBusAndBusTopConnection(BusLine line, BusInterface bus) {
+    	for(int i=0;i<line.getLine().size();i++) {
+    		busAndBusStopConnection.put(bus.getBusNumber(), new BusAndBusStop(bus.getBusNumber(),line.getBusStop(i)));
+    	}
+    }
 	
 	public void addLine(BusLineInterface line, BusInterface bus) {
+		// dodanie linii
+		
 		lines.put(lines.size()-1, line);
+		addDataToBusAndBusTopConnection(line,bus);
 		
 	    /**
 	     * Metoda dodaje linię autobusową do serwisu. Ten sam autobus

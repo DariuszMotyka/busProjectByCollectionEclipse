@@ -6,6 +6,12 @@ public class BusLine implements BusLineInterface {
 
 	private List<BusStopInterface> line;
 	
+	
+	
+	public List<BusStopInterface> getLine() {
+		return line;
+	}
+
 	public BusLine(List<BusStopInterface> line) {
 		this.line = line;
 	}
